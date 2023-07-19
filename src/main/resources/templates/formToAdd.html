@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Form to add User</h1>
+
+<form method="post" th:action="@{'/admin/addUser'}">
+    <span>username</span>
+    <input name="username" type="text">
+    <span>password</span>
+    <input name="password" type="text">
+    <span>firstName</span>
+    <input name="firstName" type="text">
+    <span>lastName</span>
+    <input name="lastName" type="text">
+    <span>age</span>
+    <input name="age" type="number">
+
+    <button type="submit">add</button>
+
+</form>
+
+<form method="get" th:action="@{'/logout'}">
+    <button type="submit">logout</button>
+</form>
+
+
+</body>
+
+</html>

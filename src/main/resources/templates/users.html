@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<h1>Users Page</h1>
+
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>password</th>
+        <th>firstName</th>
+        <th>lastName</th>
+        <th>age</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.id}"></td>
+        <td th:utext="${user.username}"></td>
+        <td th:utext="${user.password}"></td>
+        <td th:utext="${user.firstName}"></td>
+        <td th:utext="${user.lastName}"></td>
+        <td th:utext="${user.age}"></td>
+    </tr>
+</table>
+
+
+<form method="get" th:action="@{'/admin/show_formToAdd'}">
+    <button type="submit">add User</button>
+</form>
+
+<form method="get" th:action="@{'/admin/getUsers'}">
+    <button type="submit">find all Users</button>
+</form >
+
+<form method="get" th:action="@{'/admin/show_formToFindUserById'}">
+    <button type="submit">find User</button>
+</form>
+
+
+<form method="get" th:action="@{'/logout'}">
+    <button type="submit">logout</button>
+</form>
+
+
+</body>
+</html>

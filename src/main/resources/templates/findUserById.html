@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+<h1> You found User </h1>
+<div>
+  <table border ="1">
+    <tr>
+      <th>id</th>
+      <th>firstName</th>
+      <th>lastName</th>
+      <th>age</th>
+
+    </tr>
+
+    <td th:utext="${user.id}"></td>
+    <td th:utext="${user.firstName}"></td>
+    <td th:utext="${user.lastName}"></td>
+    <td th:utext="${user.age}"></td>
+
+  </table>
+</div>
+
+<form method="get" th:action="@{'/admin/getUsers'}">
+  <button type="submit">find all Users</button>
+</form >
+
+<form method="get" th:action="@{'/logout'}">
+  <button type="submit">logout</button>
+</form>
+
+
+</body>
+</html>
