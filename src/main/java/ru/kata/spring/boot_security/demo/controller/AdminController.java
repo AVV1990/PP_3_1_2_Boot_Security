@@ -21,13 +21,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/admin")
-    public String getUserByRoleUser(Principal principal, Model model) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-        return "user";
-    }
-
     @GetMapping(value = "/admin/getUsers")
     public String getUsers(ModelMap model) {
         model.addAttribute("users", userService.getUsers());
