@@ -65,14 +65,13 @@ public class UserServiceImp implements UserDetailsService, UserService {
 
     }
 
-
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);

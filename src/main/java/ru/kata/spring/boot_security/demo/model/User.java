@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -37,12 +37,14 @@ public class User implements UserDetails {
     @Column(name = "age")
     private Integer age;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE})
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -54,36 +56,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.age = age;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
-
-        User user = (User) obj;
-        return this.age == user.age
-                && (this.username == user.username || (this.username != null && this.username.equals(user.username)))
-                && (this.password == user.password || (this.password != null && this.password.equals(user.password)))
-                && (this.firstName == user.firstName || (this.firstName != null && this.firstName.equals(user.firstName)))
-                && (this.lastName == user.lastName || (this.lastName != null && this.lastName.equals(user.lastName)));
-    }
-
-
-    @Override
-    public int hashCode() {
-        return 31 + (age == 0 ? 0 : age.hashCode()) + (username == null ? 0 : username.hashCode()) + (password == null ? 0 : password.hashCode() + (firstName == null ? 0 : firstName.hashCode()) + (lastName == null ? 0 : lastName.hashCode()));
-    }
-
-    @Override
-    public String toString() {
-        return String.format(" User = [username =%s, password = %s, firstName = %s, lastName = %s, age = $d]", username, password, firstName, lastName, age);
-    }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -113,6 +85,36 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format(" User = [username =%s, password = %s, firstName = %s, lastName = %s, age = $d]", username, password, firstName, lastName, age);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        User user = (User) obj;
+        return this.age == user.age
+                && (this.username == user.username || (this.username != null && this.username.equals(user.username)))
+                && (this.password == user.password || (this.password != null && this.password.equals(user.password)))
+                && (this.firstName == user.firstName || (this.firstName != null && this.firstName.equals(user.firstName)))
+                && (this.lastName == user.lastName || (this.lastName != null && this.lastName.equals(user.lastName)));
+    }
+
+
+    @Override
+    public int hashCode() {
+        return 31 + (age == 0 ? 0 : age.hashCode()) + (username == null ? 0 : username.hashCode()) + (password == null ? 0 : password.hashCode() + (firstName == null ? 0 : firstName.hashCode()) + (lastName == null ? 0 : lastName.hashCode()));
     }
 }
 
