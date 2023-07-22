@@ -1,40 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
+    <title></title>
 </head>
 
 <body>
-<h1>Users Page</h1>
-
+<h1>Admin Panel</h1>
 
 <table border="1">
     <tr>
         <th>id</th>
-        <th>username</th>
-        <th>password</th>
         <th>firstName</th>
         <th>lastName</th>
         <th>age</th>
+        <th>username</th>
+        <th>password</th>
+        <th>role</th>
+        <th>edite</th>
+        <th>delete</th>
     </tr>
+
     <tr th:each="user : ${users}">
         <td th:utext="${user.id}"></td>
-        <td th:utext="${user.username}"></td>
-        <td th:utext="${user.password}"></td>
         <td th:utext="${user.firstName}"></td>
         <td th:utext="${user.lastName}"></td>
         <td th:utext="${user.age}"></td>
+        <td th:utext="${user.username}"></td>
+        <td th:utext="${user.password}">
+        <td th:utext="${user.getAuthorities()}">
+        <td>
+            <button type="submit"><a th:href="@{/admin/{id}/updateUser(id=${user.getId()})}">edite</a></button>
+        </td>
+        <td>
+            <button type="submit"><a th:href="@{/admin/{id}/deleteUser(id=${user.getId()})}">delete</a></button>
+        </td>
+
     </tr>
+
 </table>
 
 
 <form method="get" th:action="@{'/admin/show_formToAdd'}">
     <button type="submit">add User</button>
 </form>
-
-<form method="get" th:action="@{'/admin/getUsers'}">
-    <button type="submit">find all Users</button>
-</form >
 
 <form method="get" th:action="@{'/admin/show_formToFindUserById'}">
     <button type="submit">find User</button>
@@ -48,3 +57,5 @@
 
 </body>
 </html>
+
+

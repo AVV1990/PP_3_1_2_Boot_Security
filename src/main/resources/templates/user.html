@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
 <h1>User page!</h1>
@@ -9,21 +10,25 @@
 <table border="1">
     <tr>
 
-        <th>username</th>
-        <th>password</th>
+        <th>id</th>
         <th>firstName</th>
         <th>lastName</th>
         <th>age</th>
+        <th>username</th>
+        <th>password</th>
+        <th>role</th>
     </tr>
 
     <tr>
 
+        <td th:utext="${user.id}"></td>
+        <td th:utext="${user.firstName}"></td>
+        <td th:utext="${user.lastName}"></td>
+        <td th:utext="${user.age}"></td>
+        <td th:utext="${user.username}"></td>
+        <td th:utext="${user.password}">
+        <td th:utext="${user.getAuthorities()}">
 
-        <td th:utext="${user.getUsername()}"></td>
-        <td th:utext="${user.getPassword()}"></td>
-        <td th:utext="${user.getFirstName()}"></td>
-        <td th:utext="${user.getLastName()}"></td>
-        <td th:utext="${user.getAge()}"></td>
     </tr>
 
 </table>

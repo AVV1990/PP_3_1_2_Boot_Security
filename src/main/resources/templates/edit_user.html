@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Form to edite User</h1>
+
+<form action="#" th:action="@{/admin/updateUser}" th:object="${user}" method="post">
+
+    <label for="id"> ID</label>
+    <input readonly type="number" th:field="${user.id}" id="id" placeholder="id">
+    </br>
+
+
+    <label for="firstName"> First name</label>
+    <input type="text" th:field="${user.firstName}" id="firstName" placeholder="First name">
+    </br>
+
+    <label for="lastName"> Last name</label>
+    <input type="text" th:field="${user.lastName}" id="lastName" placeholder="Last name">
+    </br>
+
+
+    <label for="age"> Age </label>
+    <input type="number" th:field="${user.age}" id="age" placeholder="Age">
+    </br>
+
+    <label for="username"> Username </label>
+    <input type="text" th:field="${user.username}" id="username" placeholder="Username">
+    </br>
+
+    <label for="password"> Password </label>
+    <input type="text" th:field="${user.password}" id="password" placeholder="Password">
+    </br>
+
+
+    <label> Role </label>
+    <select th:field="*{roles}" multiple="multiple" size="2">
+        <option th:each="role : ${roles}" th:text="${role.getName()}" th:value="${role.getId()}"></option>
+    </select>
+
+
+
+    </br>
+
+
+    <h2></h2>
+
+    <input type="submit" value="edit">
+
+</form>
+
+<form method="get" th:action="@{'/admin/getUsers'}">
+    <button type="submit">close without changes</button>
+</form>
+
+</form>
+<h3></h3>
+
+<form method="get" th:action="@{'/logout'}">
+    <button type="submit">logout</button>
+</form>
+
+
+</body>
+
+</html>

@@ -2,40 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Find User</title>
+    <title></title>
 </head>
 <body>
-<h1> User</h1>
-<form method="get" th:action="@{'/admin/getUserById'}">
+<h1>Form to find User</h1>
+
+<form method="get" th:action="@{'/admin/getUser'}">
     <span>id</span>
     <input name="id" type="number">
 
-    <button type="submit">find</button>
+    <button type="submit">find User</button>
 
-</form>
-
-<form method="get" th:action="@{'/admin/deleteUserById'}">
-    <span>id</span>
-    <input name="id" type="number">
-
-    <button type="submit">delete</button>
-</form>
-
-<form method="post" th:action="@{'/admin/updateUser'}">
-    <span>id</span>
-    <input name="id" type="number">
-    <span>username</span>
-    <input name="username" type="text">
-    <span>password</span>
-    <input name="password" type="text">
-    <span>firstName</span>
-    <input name="firstName" type="text">
-    <span>lastName</span>
-    <input name="lastName" type="text">
-    <span>age</span>
-    <input name="age" type="number">
-
-    <button type="submit">update</button>
 </form>
 
 <form method="get" th:action="@{'/logout'}">
@@ -44,4 +21,5 @@
 
 
 </body>
+
 </html>

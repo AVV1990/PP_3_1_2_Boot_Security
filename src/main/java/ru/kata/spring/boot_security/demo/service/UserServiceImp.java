@@ -57,6 +57,7 @@ public class UserServiceImp implements UserDetailsService, UserService {
             userAfterUpdate.setAge(user.getAge());
             userAfterUpdate.setFirstName(user.getFirstName());
             userAfterUpdate.setLastName(user.getLastName());
+            userAfterUpdate.setRoles(user.getRoles());
 
             userRepository.save(userAfterUpdate);
         } else {

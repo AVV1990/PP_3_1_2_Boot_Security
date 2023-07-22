@@ -4,21 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import java.security.Principal;
 
 @Controller
 public class AdminController {
     private final UserService userService;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
+        this.roleRepository = roleRepository;
+    }
+
+    @GetMapping(value = "/admin/getRoles")
+    public String getRoles(ModelMap model) {
+        model.addAttribute("users", userService.getUsers());
+        return "users";
     }
 
     @GetMapping(value = "/admin/getUsers")
@@ -28,7 +33,8 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin/show_formToAdd")
-    public String showPageToAddUser() {
+    public String showPageToAddUser(Model model) {
+        model.addAttribute("roles", roleRepository.findAll());
         return "formToAdd";
     }
 
@@ -40,27 +46,36 @@ public class AdminController {
     @PostMapping(value = "/admin/addUser")
     public String addUser(User user) {
         userService.addUser(user);
-        return "users";
+        return "redirect:/admin/getUsers";
     }
 
 
-    @GetMapping(value = "/admin/getUserById")
+    @GetMapping(value = "/admin/getUser")
     public String getUserById(ModelMap model, @RequestParam Long id) {
         model.addAttribute("user", userService.getUserById(id));
         return "findUserById";
     }
 
 
-    @GetMapping(value = "/admin/deleteUserById")
-    public String deleteUserById(@RequestParam Long id) {
+    @GetMapping(value = "/admin/{id}/deleteUser")
+    public String deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
-        return "users";
+        return "redirect:/admin/getUsers";
+    }
+
+    @GetMapping(value = "/admin/{id}/updateUser")
+    public String showPageToUpdateUser(@PathVariable Long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleRepository.findAll());
+        return "edit_user";
     }
 
     @PostMapping(value = "/admin/updateUser")
-    public String updateUserById(@RequestParam Long id, User user) {
+    public String updateUser(@RequestParam Long id, User user) {
         userService.updateUser(id, user);
-        return "users";
+        return "redirect:/admin/getUsers";
     }
+
 
 }

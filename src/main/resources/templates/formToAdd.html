@@ -8,16 +8,25 @@
 <h1>Form to add User</h1>
 
 <form method="post" th:action="@{'/admin/addUser'}">
-    <span>username</span>
-    <input name="username" type="text">
-    <span>password</span>
-    <input name="password" type="text">
     <span>firstName</span>
     <input name="firstName" type="text">
+
     <span>lastName</span>
     <input name="lastName" type="text">
+
     <span>age</span>
     <input name="age" type="number">
+
+    <span>username</span>
+    <input name="username" type="text">
+
+    <span>password</span>
+    <input name="password" type="text">
+
+    <span>role</span>
+    <select name="roles" type="text" multiple="multiple" size="2">
+        <option th:each="roles : ${roles}" th:text="${roles.getName()}" th:value="${roles.getId()}"></option>
+    </select>
 
     <button type="submit">add</button>
 
