@@ -53,9 +53,9 @@
                 <h5>Add new user</h5>
               </div>
               <div class="row-fluid bg-white">
-                <div class="col p-4">
+                <div class="d-flex justify-content-center p-4">
 
-                  <form role="form" class="font-weight-bold text-center" th:action="@{/admin/addUser}" method="post" th:object="${user}" >
+                  <form role="form" class="w-25 font-weight-bold text-center" th:action="@{/admin/addUser}" method="post" th:object="${user}" >
                     <div class="form-group">
                       <label ><b>First name</b></label>
                       <input type="text" class="form-control" name="firstName" placeholder="First name" >
