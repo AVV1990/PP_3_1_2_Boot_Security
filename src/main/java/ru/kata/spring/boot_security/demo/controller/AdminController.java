@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,10 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 @Controller
+@Slf4j
 public class AdminController {
     private final UserService userService;
     private final RoleRepository roleRepository;
@@ -20,22 +24,19 @@ public class AdminController {
         this.roleRepository = roleRepository;
     }
 
-    @GetMapping(value = "/admin/getRoles")
-    public String getRoles(ModelMap model) {
-        model.addAttribute("users", userService.getUsers());
-        return "users";
-    }
-
     @GetMapping(value = "/admin/getUsers")
-    public String getUsers(ModelMap model) {
+    public String getUsers(ModelMap model, Principal principal) {
         model.addAttribute("users", userService.getUsers());
+        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("user", userService.findByMail(principal.getName()));
         return "users";
     }
 
     @GetMapping(value = "/admin/show_formToAdd")
-    public String showPageToAddUser(Model model) {
+    public String showPageToAddUser(Model model, Principal principal) {
         model.addAttribute("roles", roleRepository.findAll());
-        return "formToAdd";
+        model.addAttribute("user", userService.findByMail(principal.getName()));
+        return "newUser";
     }
 
     @GetMapping(value = "/admin/show_formToFindUserById")
@@ -71,8 +72,9 @@ public class AdminController {
         return "edit_user";
     }
 
-    @PostMapping(value = "/admin/updateUser")
-    public String updateUser(@RequestParam Long id, User user) {
+    @PostMapping(value = "/admin/updateUser/{id}")
+    public String updateUser(@PathVariable Long id, User user) {
+        log.info(user.toString());
         userService.updateUser(id, user);
         return "redirect:/admin/getUsers";
     }

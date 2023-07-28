@@ -20,9 +20,9 @@ public class UserController {
 
     @GetMapping(value = "/user")
     public String getUserByRoleUser(Principal principal, Model model) {
-        User user = userService.findByUsername(principal.getName());
+        User user = userService.findByMail(principal.getName());
         model.addAttribute("user", user);
-        return "user";
+        return "userPage";
     }
 
 

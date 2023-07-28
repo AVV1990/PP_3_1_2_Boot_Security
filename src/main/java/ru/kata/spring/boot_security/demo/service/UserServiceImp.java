@@ -24,8 +24,8 @@ public class UserServiceImp implements UserDetailsService, UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByMail(String mail) {
+        return userRepository.findByMail(mail);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserServiceImp implements UserDetailsService, UserService {
         if (id == null) {
             throw new RuntimeException("ID can not be null");
         } else {
-            return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User isn't found"));
+            return userRepository.findById(id).get();
         }
     }
 
@@ -52,7 +52,7 @@ public class UserServiceImp implements UserDetailsService, UserService {
 
         User userAfterUpdate = getUserById(id);
         if (userAfterUpdate != null) {
-            userAfterUpdate.setUsername(user.getUsername());
+            userAfterUpdate.setMail(user.getMail());
             userAfterUpdate.setPassword(user.getPassword());
             userAfterUpdate.setAge(user.getAge());
             userAfterUpdate.setFirstName(user.getFirstName());
@@ -74,12 +74,12 @@ public class UserServiceImp implements UserDetailsService, UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        User user = userRepository.findByMail(mail);
         if (user == null) {
             throw new UsernameNotFoundException("User isn't found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+        return new org.springframework.security.core.userdetails.User(user.getMail(), user.getPassword(), user.getAuthorities());
     }
 
 

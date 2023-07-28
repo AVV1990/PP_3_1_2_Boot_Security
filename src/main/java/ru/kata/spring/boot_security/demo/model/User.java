@@ -22,8 +22,8 @@ public class User implements UserDetails {
     private Long id;
 
 
-    @Column(name = "username", unique = true)
-    private String username;
+    @Column(name = "mail", unique = true)
+    private String mail;
 
     @Column(name = "password")
     private String password;
@@ -49,8 +49,8 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, Integer age) {
-        this.username = username;
+    public User(String mail, String password, String firstName, String lastName, Integer age) {
+        this.mail = mail;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,7 +64,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return mail;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return String.format(" User = [username =%s, password = %s, firstName = %s, lastName = %s, age = $d]", username, password, firstName, lastName, age);
+        return String.format(" User = [mail =%s, password = %s, firstName = %s, lastName = %s, age = $d]", mail, password, firstName, lastName, age);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class User implements UserDetails {
 
         User user = (User) obj;
         return this.age == user.age
-                && (this.username == user.username || (this.username != null && this.username.equals(user.username)))
+                && (this.mail == user.mail || (this.mail != null && this.mail.equals(user.mail)))
                 && (this.password == user.password || (this.password != null && this.password.equals(user.password)))
                 && (this.firstName == user.firstName || (this.firstName != null && this.firstName.equals(user.firstName)))
                 && (this.lastName == user.lastName || (this.lastName != null && this.lastName.equals(user.lastName)));
@@ -114,7 +114,7 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return 31 + (age == 0 ? 0 : age.hashCode()) + (username == null ? 0 : username.hashCode()) + (password == null ? 0 : password.hashCode() + (firstName == null ? 0 : firstName.hashCode()) + (lastName == null ? 0 : lastName.hashCode()));
+        return 31 + (age == 0 ? 0 : age.hashCode()) + (mail == null ? 0 : mail.hashCode()) + (password == null ? 0 : password.hashCode() + (firstName == null ? 0 : firstName.hashCode()) + (lastName == null ? 0 : lastName.hashCode()));
     }
 }
 

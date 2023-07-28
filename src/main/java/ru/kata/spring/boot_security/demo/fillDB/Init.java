@@ -29,8 +29,8 @@ public class Init {
         // пароль у adminUser: 123
         // пароль у normalUser: 321
 
-        User adminUser = new User("admin", "$2a$12$RRdlxgGzx7YoFpIWbYA4PekNBUWMecLSouYvy.kGPOE.IzXCCHO2q", "Alex", "MegaAlex", 30);
-        User normalUser = new User("user", "$2a$12$N5NlnhKfckrNs5EPsE52purCDNHPX05wADoEqxvRoEKWu9CpnoyuS", "Jack", "MegaJack", 35);
+        User adminUser = new User("admin@mail.ru", "$2a$12$RRdlxgGzx7YoFpIWbYA4PekNBUWMecLSouYvy.kGPOE.IzXCCHO2q", "Alex", "MegaAlex", 30);
+        User normalUser = new User("user@mail.ru", "$2a$12$N5NlnhKfckrNs5EPsE52purCDNHPX05wADoEqxvRoEKWu9CpnoyuS", "Jack", "MegaJack", 35);
 
         Role adminRole = new Role("ROLE_ADMIN");
         Role userRole = new Role("ROLE_USER");
