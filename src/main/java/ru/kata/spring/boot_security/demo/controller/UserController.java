@@ -1,15 +1,13 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
 
-@Controller
+@RestController
 public class UserController {
     private final UserService userService;
 
@@ -19,10 +17,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public String getUserByRoleUser(Principal principal, Model model) {
-        User user = userService.findByMail(principal.getName());
-        model.addAttribute("user", user);
-        return "userPage";
+    public User getUser(Principal principal) {
+        return userService.findByMail(principal.getName());
     }
 
 

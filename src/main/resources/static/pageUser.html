@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    a {
+      text-decoration: none; /* Убираем подчёркивание */
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+<div  class="container-fluid">
+
+  <div class="row">
+    <div class="p-3 mb-2 bg-dark text-white">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end"><span><a class="text-white"  href="/logout">logout</a></span></div>
+      <span id= "adminPage"  class="fw-bold"></span>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-start">
+
+    <div class="col-2">
+      <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#user"
+                type="submit" role="tab" aria-controls="v-pills-profile" aria-selected="true">User
+        </button>
+
+      </div>
+    </div>
+
+    <div class="w-100 p-3" style="background-color: #eee;">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+          <h1> User information-page </h1>
+
+          <div class="row-fluid px-3 py-2 border-bottom">
+            <h5>About user</h5>
+          </div>
+        <div class="row-fluid bg-white">
+          <div class="col p-4">
+            <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">First name</th>
+              <th scope="col">Last name</th>
+              <th scope="col">Age</th>
+              <th scope="col">Email</th>
+              <th scope="col">Role</th>
+            </tr>
+            </thead>
+            <tbody id="tbDataUser">
+            </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+  function getUserData() {
+    fetch("http://localhost:8080/user").then(
+            (res)=>res.json()
+    ).then((response)=>{
+      let tmpData  = '';
+
+      var uniqueNames = [];
+      response.roles.forEach((role) => {
+        uniqueNames.push(role.name)
+      });
+
+      tmpData+="<tr>"
+      tmpData+="<td>"+response.id+"</td>";
+      tmpData+="<td>"+response.firstName+"</td>";
+      tmpData+="<td>"+response.lastName+"</td>";
+      tmpData+="<td>"+response.age+"</td>";
+      tmpData+="<td>"+response.mail+"</td>";
+      tmpData+="<td>"+uniqueNames+"</td>";
+
+      tmpData+="</tr>";
+
+
+      document.getElementById("tbDataUser").innerHTML = tmpData;
+
+    })
+  }
+
+  function getPage() {
+    fetch("http://localhost:8080/user").then(
+            (res)=>res.json()
+    ).then((response)=>{
+      let tmpData  = '';
+
+
+      var uniqueNames = [];
+      response.roles.forEach((role) => {
+        uniqueNames.push(role.name)
+      });
+
+      tmpData+="<tr>"
+      tmpData+="<td>"+response.mail+"</td>";
+      tmpData+="<td> </td>";
+      tmpData+="<td>with roles</td>";
+      tmpData+="<td> </td>";
+      tmpData+="<td>"+uniqueNames+"</td>";
+
+      tmpData+="</tr>";
+
+
+      document.getElementById("adminPage").innerHTML= tmpData;
+
+
+    })
+  }
+
+  getPage();
+  getUserData()
+
+
+
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

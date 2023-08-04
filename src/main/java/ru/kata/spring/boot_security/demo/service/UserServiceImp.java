@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +12,7 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
@@ -33,10 +35,20 @@ public class UserServiceImp implements UserService {
         return userRepository.findAll();
     }
 
+
     @Override
     public void addUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User persistedUser = new User(
+                user.getMail(),
+                passwordEncoder.encode(user.getPassword()),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getAge()
+        );
+        userRepository.save(persistedUser);
+        persistedUser.setRoles(user.getRoles());
+        userRepository.save(persistedUser);
+
     }
 
     @Override
